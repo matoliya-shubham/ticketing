@@ -1,0 +1,19 @@
+ Ingress as the main entrance or traffic manager for your Kubernetes cluster. When a request comes from outside the cluster (like from your browser or Postman), the Ingress looks at the request's address (e.g., ticketing.dev/api/users/currentuser) and decides which specific service inside the cluster should handle it.
+ - In our ingress-srv.yaml file, you've configured it to:
+- Listen for requests on the host ticketing.dev.
+- If the path matches /api/users/ followed by anything else, it forwards the request to the auth-srv service on port 3000.
+
+Yes, we can use other methods to achieve this but it's not as straightforward or scalable. Without an Ingress, you would typically have to use other Kubernetes service types like: NodePort, LoadBalancer, or kubectl port-forward.
+
+The Ingress is the standard and most powerful method because it provides a single entry point to route traffic to dozens or even hundreds of different services based on simple rules.
+
+--> Google cloud 
+- To build images and use them we can use google cloud or any cloud provider instead of docker hub.
+- We have to setup account over there and link it to context of kubectl.
+- After cloud context is successfully established we can use gcloud to build and push images to google cloud.
+- We need to changes name of images in all yaml files and skaffold.yaml file. That name will look as us.gcr.io/{project-id}/{image-name}
+- We have to update skaffold and ingress files to use google cloud instead of docker hub.
+- We have to setup ingress-ngnix on google cloud cluster.
+- And we have to update our host file to point to remote cluster not local one i.e. ticketing.dev
+- Restart skaffold
+- Note: delete the cluster after use on cloud
